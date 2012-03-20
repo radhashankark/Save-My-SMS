@@ -1,0 +1,6 @@
+.classpath
+.project
+thumbs.db
+*.apk
+bin/*
+libs/*
