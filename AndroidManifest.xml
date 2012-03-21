@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shankarlabs.sms"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1" >
 
-    <uses-sdk android:minSdkVersion="7" android:maxSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15" />
 
     <application
         android:icon="@drawable/ic_launcher"
