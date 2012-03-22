@@ -1,8 +1,8 @@
 package com.shankarlabs.sms.ui;
 
-import com.example.android.actionbarcompat.ActionBarActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 
-public class Settings extends ActionBarActivity
+public class Settings extends SherlockActivity
 {
 
 }

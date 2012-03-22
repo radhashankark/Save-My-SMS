@@ -1,29 +1,32 @@
 package com.shankarlabs.sms;
 
-import com.example.android.actionbarcompat.ActionBarFragmentActivity;
-
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ActionBar.Tab;
 import android.os.Bundle;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.Window;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class SaveMySMSActivity extends ActionBarFragmentActivity
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+public class SaveMySMSActivity extends SherlockFragmentActivity
 {
 	public void onCreate(Bundle savedInstanceState)
     {
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
         //Add the two tabs on load
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         
         final String settingsTabTag = "settingsTab";
         final String settingsTabTitle = "Settings";
@@ -44,7 +47,7 @@ public class SaveMySMSActivity extends ActionBarFragmentActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     }
     
-	
+	/*
 	public void onAddTab(View v)
 	{
         final ActionBar bar = getActionBar();
@@ -59,11 +62,11 @@ public class SaveMySMSActivity extends ActionBarFragmentActivity
         final ActionBar bar = getActionBar();
         bar.removeTabAt(bar.getTabCount() - 1);
     }
-   
+   	*/
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
+        MenuInflater menuInflater = getSupportMenuInflater();
         menuInflater.inflate(R.menu.main, menu);
 
         // Calling super after populating the menu is necessary here to ensure that the
@@ -80,12 +83,14 @@ public class SaveMySMSActivity extends ActionBarFragmentActivity
 
             case R.id.menu_refresh:
                 Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
-                getActionBarHelper().setRefreshActionItemState(true);
+                // getActionBarHelper().setRefreshActionItemState(true);
+                setProgressBarIndeterminateVisibility(Boolean.FALSE);
                 getWindow().getDecorView().postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {
-                                getActionBarHelper().setRefreshActionItemState(false);
+                                // getActionBarHelper().setRefreshActionItemState(false);
+                                setProgressBarIndeterminateVisibility(Boolean.TRUE);
                             }
                         }, 1000);
                 break;
@@ -125,7 +130,7 @@ public class SaveMySMSActivity extends ActionBarFragmentActivity
             ft.add(R.id.fragment_content, mTabFragment, mTabFragment.getTabTag());
         }
 
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
             ft.remove(mTabFragment);
         }
 
@@ -135,7 +140,7 @@ public class SaveMySMSActivity extends ActionBarFragmentActivity
 
     }
     
-    private class TabFragment extends Fragment
+    private class TabFragment extends SherlockFragment
     {
     	private int mTabId;
         private String mTabTag;

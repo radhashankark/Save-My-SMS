@@ -1,8 +1,8 @@
 package com.shankarlabs.sms.ui;
 
-import com.example.android.actionbarcompat.ActionBarFragmentActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class ViewFragment extends ActionBarFragmentActivity 
+public class ViewFragment extends SherlockFragmentActivity 
 {
 	
 }
