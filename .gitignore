@@ -1,6 +1,7 @@
 .classpath
 .project
 thumbs.db
+project.properties
 *.apk
 bin/*
 libs/*

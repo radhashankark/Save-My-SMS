@@ -9,15 +9,18 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.shankarlabs.sms.ui.SettingsFragment;
+import com.shankarlabs.sms.ui.ViewFragment;
 
 public class SaveMySMSActivity extends SherlockFragmentActivity
 {
+	public static final String LOGTAG = "SaveMySMS";
+	
 	public void onCreate(Bundle savedInstanceState)
     {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -30,39 +33,20 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
         
         final String settingsTabTag = "settingsTab";
         final String settingsTabTitle = "Settings";
-        final int settingsTabId = R.layout.settings_fragment;
         actionBar.addTab(actionBar.newTab()
                 .setText(settingsTabTitle) // The Tab Title
-                .setTabListener(new TabListener(new TabFragment(settingsTabId, settingsTabTag))));
+                .setTabListener(new TabListener(new SettingsFragment(), settingsTabTag))); // TabFragment(settingsTabId, settingsTabTag))));
         
         final String viewSMSTabTag = "ViewSMSTab";
         final String viewSMSTabTitle = "View SMS";
-        final int viewSMSTabId = R.layout.viewsms_fragment;
         actionBar.addTab(actionBar.newTab()
                 .setText(viewSMSTabTitle) // The Tab Title
-                .setTabListener(new TabListener(new TabFragment(viewSMSTabId, viewSMSTabTag))));
+                .setTabListener(new TabListener(new ViewFragment(), viewSMSTabTag))); // TabFragment(viewSMSTabId, viewSMSTabTag))));
         
         // Time to enable the tabs
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE); //, ActionBar.DISPLAY_SHOW_TITLE); // Don't disable anything
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     }
-    
-	/*
-	public void onAddTab(View v)
-	{
-        final ActionBar bar = getActionBar();
-        final int tabCount = bar.getTabCount();
-        final String text = "Tab " + tabCount;
-        bar.addTab(bar.newTab()
-                .setText(text)
-                .setTabListener(new TabListener(new TabFragment(R.layout.settings_fragment, "Settings"))));
-    }
-
-    public void onRemoveTab(View v) {
-        final ActionBar bar = getActionBar();
-        bar.removeTabAt(bar.getTabCount() - 1);
-    }
-   	*/
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,13 +68,13 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
             case R.id.menu_refresh:
                 Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
                 // getActionBarHelper().setRefreshActionItemState(true);
-                setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                // setProgressBarIndeterminateVisibility(Boolean.TRUE);
                 getWindow().getDecorView().postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {
                                 // getActionBarHelper().setRefreshActionItemState(false);
-                                setProgressBarIndeterminateVisibility(Boolean.TRUE);
+                                // setProgressBarIndeterminateVisibility(Boolean.FALSE);
                             }
                         }, 1000);
                 break;
@@ -106,58 +90,62 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
         return super.onOptionsItemSelected(item);
     }
     
-    /**
-     * A TabListener receives event callbacks from the action bar as tabs
-     * are deselected, selected, and reselected. A FragmentTransaction
-     * is provided to each of these callbacks; if any operations are added
-     * to it, it will be committed at the end of the full tab switch operation.
-     * This lets tab switches be atomic without the app needing to track
-     * the interactions between different tabs.
-     *
-     * NOTE: This is a very simple implementation that does not retain
-     * fragment state of the non-visible tabs across activity instances.
-     * Look at the FragmentTabs example for how to do a more complete
-     * implementation.
-     */
     private class TabListener implements ActionBar.TabListener {
-        private TabFragment mTabFragment;
+        private SherlockFragment mTabFragment;
+        private String mTag;
 
-        public TabListener(TabFragment fragment) {
+        public TabListener(SherlockFragment fragment, String tag) {
         	mTabFragment = fragment;
+        	mTag = tag;
         }
 
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            ft.add(R.id.fragment_content, mTabFragment, mTabFragment.getTabTag());
+        	// There is an issue with compatibility library v4 that passes null FragmentTransaction. Handle that
+        	if(ft == null)
+        	{
+        		Log.d(LOGTAG, "SMSActivity : onTabSelected : FragmentTransaction is null");
+        		FragmentManager fm = getSupportFragmentManager();
+                ft = fm.beginTransaction();
+                ft.add(R.id.fragment_content, mTabFragment, mTag); // mTabFragment.getTag());
+                ft.commit();
+        	}
+        	else
+        	{
+        		// If not null, use the given ft
+        		ft.add(R.id.fragment_content, mTabFragment, mTag); // mTabFragment.getTag());
+        	}
         }
 
         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            ft.remove(mTabFragment);
+        	// There is an issue with compatibility library v4 that passes null FragmentTransaction. Handle that
+        	if(ft == null)
+        	{
+        		Log.d(LOGTAG, "SMSActivity : onTabUnselected : FragmentTransaction is null");
+        		FragmentManager fm = getSupportFragmentManager();
+                ft = fm.beginTransaction();
+                ft.remove(mTabFragment);
+                ft.commit();
+        	}
+        	else
+        	{
+        		// If not null, use the given ft
+        		ft.remove(mTabFragment);
+        	}
         }
 
         public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            Toast.makeText(SaveMySMSActivity.this, "Reselected!", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-    
-    private class TabFragment extends SherlockFragment
-    {
-    	private int mTabId;
-        private String mTabTag;
-
-        public TabFragment(int tabId, String tag) {
-        	mTabId = tabId;
-        	mTabTag = tag;
-        }
-
-        public String getTabTag() {
-            return mTabTag;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View fragmentView = inflater.inflate(mTabId, container, false);
-            return fragmentView;
+        	// There is an issue with compatibility library v4 that passes null FragmentTransaction. Handle that
+        	if(ft == null)
+        	{
+        		Log.d(LOGTAG, "SMSActivity : onTabReselected : FragmentTransaction is null");
+        		FragmentManager fm = getSupportFragmentManager();
+                ft = fm.beginTransaction();
+        	}
+        	else
+        	{
+        		// If not null, use the given ft
+        		Toast.makeText(SaveMySMSActivity.this, "Reselected!", Toast.LENGTH_SHORT).show();
+        	}
         }
 
     }

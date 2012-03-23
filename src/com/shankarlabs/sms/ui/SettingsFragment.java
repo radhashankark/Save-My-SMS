@@ -2,6 +2,7 @@ package com.shankarlabs.sms.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,8 @@ import com.shankarlabs.sms.R;
 
 public class SettingsFragment extends SherlockFragment
 {
+	private static final String LOGTAG = "SaveMySMS";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
@@ -24,7 +27,7 @@ public class SettingsFragment extends SherlockFragment
 	{
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.settings_fragment, container, false);
-        
+        Log.d(LOGTAG, "SettingsFragment : onCreateView : Created SettingsFragment View");
         return fragmentView;
     }
 	
@@ -44,6 +47,8 @@ public class SettingsFragment extends SherlockFragment
         optionWhat.setOnClickListener(optWhatClickListener);
         optionWhere.setOnClickListener(optWhereClickListener);
         optionRestore.setOnClickListener(optRestoreClickListener);
+        
+        Log.d(LOGTAG, "SettingsFragment : onActivityCreated : All Listeners bound");
 	}
 	
 	OnClickListener optWhenClickListener = new OnClickListener()
