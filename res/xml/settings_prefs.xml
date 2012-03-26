@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:orientation="horizontal" >
+    
+    <PreferenceCategory
+        android:title="When to backup" >
+        
+        <ListPreference
+			android:title="Incoming"
+			android:summary="Schedule backup on incoming SMS"
+			android:key="scheduleIncomingPref"
+			android:defaultValue="3m"
+			android:entries="@array/schincprefArray"
+			android:entryValues="@array/schincprefValues" />
+        
+        <ListPreference
+			android:title="Timed"
+			android:summary="Schedue backup at specific intervals"
+			android:key="scheduleTimedPref"
+			android:defaultValue="2h"
+			android:entries="@array/schtimeprefArray"
+			android:entryValues="@array/schtimeprefValues" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="Where to backup" >
+        	
+            <CheckboxPreference
+                android:id="@+id/smsgmailbkpckbx"
+                android:title="Backup to GMail"
+                android:summary="Backup to GMail" />
+            
+            <CheckboxPreference
+                android:id="@+id/smsdocsbkpckbx"
+                android:title="Backup to Docs"
+                android:summary="Backup to Docs" />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

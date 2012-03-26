@@ -5,10 +5,10 @@
 	android:orientation="horizontal" >
     
     <fragment
-	    android:name="com.shankarlabs.railtravel.ui.SettingsFragment"
-		android:id="@+id/settings_fragment" 
+	    android:name="com.shankarlabs.railtravel.ui.StatusFragment"
+		android:id="@+id/status_fragment" 
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:tag="settings_fragment" />
+		android:tag="status_fragment" />
 
 </LinearLayout>

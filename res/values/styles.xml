@@ -16,6 +16,18 @@
 
 <resources>
 
+    <style name="AppThemeDark" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/background_gray_noise</item>
+        <item name="android:textColor">#888</item>
+
+        <!-- for programmatic instantiation 
+        <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
+        <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
+        <item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
+        <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
+        -->
+    </style>
+    
     <style name="AppTheme" parent="android:style/Theme.Holo">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
@@ -41,7 +53,6 @@
     <style name="ActionBarCompatItemBase">
         <!-- layout_width/height must be set in code -->
         <item name="android:scaleType">center</item>
-        <item name="android:background">@drawable/actionbar_compat_item</item>
     </style>
 
     <style name="ActionBarCompatProgressIndicator" parent="android:style/Widget.ProgressBar.Large">

@@ -1,7 +1,6 @@
 package com.shankarlabs.sms.ui;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.shankarlabs.sms.R;
 
-public class SettingsFragment extends SherlockFragment
+public class StatusFragment extends SherlockFragment
 {
 	private static final String LOGTAG = "SaveMySMS";
 	
@@ -28,7 +26,7 @@ public class SettingsFragment extends SherlockFragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.settings_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.status_fragment, container, false);
         Log.d(LOGTAG, "SettingsFragment : onCreateView : Created SettingsFragment View");
         return fragmentView;
     }

@@ -1,5 +1,6 @@
 package com.shankarlabs.sms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.shankarlabs.sms.ui.SettingsFragment;
+import com.shankarlabs.sms.ui.StatusFragment;
 import com.shankarlabs.sms.ui.ViewFragment;
 
 public class SaveMySMSActivity extends SherlockFragmentActivity
@@ -23,25 +25,31 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
 	
 	public void onCreate(Bundle savedInstanceState)
     {
+		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        // Set the progress spinner to false since it starts spinning on load
+        setSupportProgressBarIndeterminateVisibility(false);
+        
         //Add the two tabs on load
         ActionBar actionBar = getSupportActionBar();
         
+        final String statusTabTag = "statusTab";
+        final String statusTabTitle = "Status";
+        actionBar.addTab(actionBar.newTab()
+                .setText(statusTabTitle) // The Tab Title
+                .setTabListener(new TabListener(new StatusFragment(), statusTabTag))); // TabFragment(statusTabId, statusTabTag))));
+        
+        /* We don't need this tab right now. We'll enable it later
         final String settingsTabTag = "settingsTab";
         final String settingsTabTitle = "Settings";
         actionBar.addTab(actionBar.newTab()
                 .setText(settingsTabTitle) // The Tab Title
                 .setTabListener(new TabListener(new SettingsFragment(), settingsTabTag))); // TabFragment(settingsTabId, settingsTabTag))));
-        
-        final String viewSMSTabTag = "ViewSMSTab";
-        final String viewSMSTabTitle = "View SMS";
-        actionBar.addTab(actionBar.newTab()
-                .setText(viewSMSTabTitle) // The Tab Title
-                .setTabListener(new TabListener(new ViewFragment(), viewSMSTabTag))); // TabFragment(viewSMSTabId, viewSMSTabTag))));
+        */
         
         // Time to enable the tabs
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE); //, ActionBar.DISPLAY_SHOW_TITLE); // Don't disable anything
@@ -68,19 +76,22 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
             case R.id.menu_refresh:
                 Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
                 // getActionBarHelper().setRefreshActionItemState(true);
-                // setProgressBarIndeterminateVisibility(Boolean.TRUE);
+                setSupportProgressBarIndeterminateVisibility(true);
                 getWindow().getDecorView().postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {
                                 // getActionBarHelper().setRefreshActionItemState(false);
-                                // setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                            	setSupportProgressBarIndeterminateVisibility(false);
                             }
                         }, 1000);
                 break;
 
-            case R.id.menu_search:
-                Toast.makeText(this, "Tapped search", Toast.LENGTH_SHORT).show();
+            case R.id.menu_settings:
+                Toast.makeText(this, "Tapped setings", Toast.LENGTH_SHORT).show();
+            	// Start intent for Preferences
+            	Intent prefsIntent = new Intent("com.shankarlabs.sms.Settings");
+            	startActivity(prefsIntent);
                 break;
 
             case R.id.menu_share:

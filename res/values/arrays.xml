@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="schincprefArray">
+        <item>1m</item>
+        <item>3m</item>
+        <item>5m</item>
+        <item>10m</item>
+        <item>20m</item>
+        <item>1h</item>
+    </string-array>
+    
+    <string-array name="schincprefValues">
+        <item>1 minute</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>20 minutes</item>
+        <item>1 hour</item>
+    </string-array>
+    
+    <string-array name="schtimeprefArray">
+        <item>1h</item>
+        <item>2h</item>
+        <item>4h</item>
+        <item>6h</item>
+        <item>12h</item>
+        <item>manual</item>
+    </string-array>
+    
+    <string-array name="schtimeprefValues">
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>Manual</item>
+    </string-array>
+    
+</resources>
