@@ -56,6 +56,9 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
         // Time to enable the tabs
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE); //, ActionBar.DISPLAY_SHOW_TITLE); // Don't disable anything
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
+        // Remove it later; This is for testing only
+        msgHelper.getMessages(getApplicationContext());
     }
     
     @Override

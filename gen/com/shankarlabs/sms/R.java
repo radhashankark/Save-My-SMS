@@ -965,6 +965,7 @@ containing a value of this type.
          */
         public static final int AppThemeDark=0x7f0b004e;
         /**  For some reason PreferenceScreen needs it's own style to display correctly 
+ For some reason PreferenceScreen needs it's own style to display correctly 
          */
         public static final int DarkPrefTheme=0x7f0b004f;
         public static final int DialogWindowTitle_Sherlock=0x7f0b002c;

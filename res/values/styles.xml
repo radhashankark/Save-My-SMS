@@ -29,7 +29,7 @@
     </style>
     
 	<!-- For some reason PreferenceScreen needs it's own style to display correctly -->
-   	<style name="DarkPrefTheme">
+   	<style name="DarkPrefTheme" parent="Theme.Sherlock">
 	    <item name="android:windowBackground">@drawable/background_gray_noise</item>
 		<item name="android:textColor">#888</item>
 	</style>

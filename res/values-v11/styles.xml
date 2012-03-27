@@ -16,6 +16,12 @@
 
 <resources>
 
+	<!-- For some reason PreferenceScreen needs it's own style to display correctly -->
+   	<style name="DarkPrefTheme">
+	    <item name="android:windowBackground">@drawable/background_gray_noise</item>
+		<item name="android:textColor">#888</item>
+	</style>
+	
     <style name="AppTheme" parent="android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
