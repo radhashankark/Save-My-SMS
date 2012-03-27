@@ -28,6 +28,12 @@
         -->
     </style>
     
+	<!-- For some reason PreferenceScreen needs it's own style to display correctly -->
+   	<style name="DarkPrefTheme">
+	    <item name="android:windowBackground">@drawable/background_gray_noise</item>
+		<item name="android:textColor">#888</item>
+	</style>
+	
     <style name="AppTheme" parent="android:style/Theme.Holo">
         <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
         <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>

@@ -1,6 +1,7 @@
 package com.shankarlabs.sms.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
@@ -11,11 +12,11 @@ import com.shankarlabs.sms.R;
 
 public class SettingsActivity extends SherlockPreferenceActivity
 {
-	
+	private static final String LOGTAG = "SaveMySMS";
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(LOGTAG, "SettingsActivity : onCreate : Loading prefs now");
         addPreferencesFromResource(R.xml.settings_prefs);
         
         // setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP);

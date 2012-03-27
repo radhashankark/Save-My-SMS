@@ -26,18 +26,54 @@
     </PreferenceCategory>
     
     <PreferenceCategory
-        android:title="Where to backup" >
+        android:title="Backup SMS"
+        android:textSize="24dp" >
         	
-            <CheckboxPreference
+            <CheckBoxPreference
                 android:id="@+id/smsgmailbkpckbx"
                 android:title="Backup to GMail"
                 android:summary="Backup to GMail" />
             
-            <CheckboxPreference
+            <CheckBoxPreference
                 android:id="@+id/smsdocsbkpckbx"
                 android:title="Backup to Docs"
                 android:summary="Backup to Docs" />
-        
+                
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="Backup MMS" >
+        	
+            <CheckBoxPreference
+                android:id="@+id/mmsgmailbkpckbx"
+                android:title="Backup to GMail"
+                android:summary="Backup to GMail" />
+            
+            <CheckBoxPreference
+                android:id="@+id/mmsdocsbkpckbx"
+                android:title="Backup to Docs"
+                android:summary="Backup to Docs" />
+                
+            <CheckBoxPreference
+                android:id="@+id/mmspicasabkpckbx"
+                android:title="Backup to Picasa"
+                android:summary="Backup images to Picasa" />
+                
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="Backup Call Logs" >
+        	
+            <CheckBoxPreference
+                android:id="@+id/logsgmailbkpckbx"
+                android:title="Backup to GMail"
+                android:summary="Backup to GMail" />
+            
+            <CheckBoxPreference
+                android:id="@+id/logsdocsbkpckbx"
+                android:title="Backup to Docs"
+                android:summary="Backup to Docs" />
+                
     </PreferenceCategory>
 
 </PreferenceScreen>

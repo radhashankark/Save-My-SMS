@@ -15,13 +15,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.shankarlabs.sms.core.MsgHelper;
 import com.shankarlabs.sms.ui.SettingsFragment;
 import com.shankarlabs.sms.ui.StatusFragment;
-import com.shankarlabs.sms.ui.ViewFragment;
+import com.shankarlabs.sms.ui.MsgThreadFragment;
 
 public class SaveMySMSActivity extends SherlockFragmentActivity
 {
 	public static final String LOGTAG = "SaveMySMS";
+	private MsgHelper msgHelper = new MsgHelper(); 
 	
 	public void onCreate(Bundle savedInstanceState)
     {
@@ -43,13 +45,13 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
                 .setText(statusTabTitle) // The Tab Title
                 .setTabListener(new TabListener(new StatusFragment(), statusTabTag))); // TabFragment(statusTabId, statusTabTag))));
         
-        /* We don't need this tab right now. We'll enable it later
-        final String settingsTabTag = "settingsTab";
-        final String settingsTabTitle = "Settings";
+        /* We don't need this tab right now. We'll enable it later */
+        final String msgThreadTabTag = "MsgThreadTab";
+        final String msgThreadTabTitle = "Threads";
         actionBar.addTab(actionBar.newTab()
-                .setText(settingsTabTitle) // The Tab Title
-                .setTabListener(new TabListener(new SettingsFragment(), settingsTabTag))); // TabFragment(settingsTabId, settingsTabTag))));
-        */
+                .setText(msgThreadTabTitle) // The Tab Title
+                .setTabListener(new TabListener(new MsgThreadFragment(), msgThreadTabTag))); // TabFragment(settingsTabId, settingsTabTag))));
+        // */
         
         // Time to enable the tabs
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE); //, ActionBar.DISPLAY_SHOW_TITLE); // Don't disable anything
@@ -68,27 +70,30 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	Log.d(LOGTAG, "Clicked on itemID " + item.getItemId());
         switch (item.getItemId()) {
             case android.R.id.home:
                 Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.menu_refresh:
-                Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
-                // getActionBarHelper().setRefreshActionItemState(true);
+                // Toast.makeText(this, "Fake refreshing...", Toast.LENGTH_SHORT).show();
                 setSupportProgressBarIndeterminateVisibility(true);
+                msgHelper.getMessages(getApplicationContext());
+                setSupportProgressBarIndeterminateVisibility(false);
+                /* 
                 getWindow().getDecorView().postDelayed(
                         new Runnable() {
                             @Override
                             public void run() {
-                                // getActionBarHelper().setRefreshActionItemState(false);
                             	setSupportProgressBarIndeterminateVisibility(false);
                             }
                         }, 1000);
+                */
                 break;
 
             case R.id.menu_settings:
-                Toast.makeText(this, "Tapped setings", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Opening Settings", Toast.LENGTH_SHORT).show();
             	// Start intent for Preferences
             	Intent prefsIntent = new Intent("com.shankarlabs.sms.Settings");
             	startActivity(prefsIntent);

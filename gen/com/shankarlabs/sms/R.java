@@ -850,15 +850,21 @@ containing a value of this type.
         public static final int fragment_content=0x7f050027;
         public static final int homeAsUp=0x7f050006;
         public static final int listMode=0x7f050002;
+        public static final int logsdocsbkpckbx=0x7f050035;
+        public static final int logsgmailbkpckbx=0x7f050034;
         public static final int menu_refresh=0x7f050014;
-        public static final int menu_search=0x7f05002f;
-        public static final int menu_settings=0x7f050030;
-        public static final int menu_share=0x7f050031;
+        public static final int menu_settings=0x7f050036;
+        public static final int menu_share=0x7f050037;
+        public static final int mmsdocsbkpckbx=0x7f050032;
+        public static final int mmsgmailbkpckbx=0x7f050031;
+        public static final int mmspicasabkpckbx=0x7f050033;
         public static final int normal=0x7f050001;
-        public static final int settings_done=0x7f050032;
+        public static final int settings_done=0x7f050038;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
+        public static final int smsdocsbkpckbx=0x7f050030;
+        public static final int smsgmailbkpckbx=0x7f05002f;
         public static final int status_fragment=0x7f050028;
         public static final int statuscount=0x7f05002b;
         public static final int statustext=0x7f05002a;
@@ -892,13 +898,13 @@ containing a value of this type.
         public static final int abs__screen_simple_overlay_action_mode=0x7f030011;
         public static final int actionbar_indeterminate_progress=0x7f030012;
         public static final int main=0x7f030013;
-        public static final int settings_fragment=0x7f030014;
-        public static final int sherlock_spinner_dropdown_item=0x7f030015;
-        public static final int sherlock_spinner_item=0x7f030016;
-        public static final int status=0x7f030017;
-        public static final int status_fragment=0x7f030018;
-        public static final int viewsms=0x7f030019;
-        public static final int viewsms_fragment=0x7f03001a;
+        public static final int msgthread_fragment=0x7f030014;
+        public static final int settings_fragment=0x7f030015;
+        public static final int sherlock_spinner_dropdown_item=0x7f030016;
+        public static final int sherlock_spinner_item=0x7f030017;
+        public static final int status=0x7f030018;
+        public static final int status_fragment=0x7f030019;
+        public static final int viewsms=0x7f03001a;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -940,16 +946,16 @@ containing a value of this type.
         public static final int wheresumtxtview=0x7f0a0011;
     }
     public static final class style {
-        public static final int ActionBar=0x7f0b0051;
-        public static final int ActionBarCompat=0x7f0b0050;
-        public static final int ActionBarCompatHomeItem=0x7f0b0057;
-        public static final int ActionBarCompatItem=0x7f0b0056;
-        public static final int ActionBarCompatItemBase=0x7f0b0052;
-        public static final int ActionBarCompatProgressIndicator=0x7f0b0053;
-        public static final int ActionBarCompatTitle=0x7f0b0055;
-        public static final int ActionBarCompatTitleBase=0x7f0b0054;
-        public static final int ActionBarTitle=0x7f0b0058;
-        public static final int AppTheme=0x7f0b004f;
+        public static final int ActionBar=0x7f0b0052;
+        public static final int ActionBarCompat=0x7f0b0051;
+        public static final int ActionBarCompatHomeItem=0x7f0b0058;
+        public static final int ActionBarCompatItem=0x7f0b0057;
+        public static final int ActionBarCompatItemBase=0x7f0b0053;
+        public static final int ActionBarCompatProgressIndicator=0x7f0b0054;
+        public static final int ActionBarCompatTitle=0x7f0b0056;
+        public static final int ActionBarCompatTitleBase=0x7f0b0055;
+        public static final int ActionBarTitle=0x7f0b0059;
+        public static final int AppTheme=0x7f0b0050;
         /**  for programmatic instantiation 
         <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
         <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
@@ -958,6 +964,9 @@ containing a value of this type.
         
          */
         public static final int AppThemeDark=0x7f0b004e;
+        /**  For some reason PreferenceScreen needs it's own style to display correctly 
+         */
+        public static final int DarkPrefTheme=0x7f0b004f;
         public static final int DialogWindowTitle_Sherlock=0x7f0b002c;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0b002d;
         public static final int Sherlock___Theme=0x7f0b0040;
