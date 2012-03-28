@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.shankarlabs.sms.core.AuthHandler;
 import com.shankarlabs.sms.core.MsgHelper;
 import com.shankarlabs.sms.ui.SettingsFragment;
 import com.shankarlabs.sms.ui.StatusFragment;
@@ -24,6 +25,7 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
 {
 	public static final String LOGTAG = "SaveMySMS";
 	private MsgHelper msgHelper = new MsgHelper(); 
+	private AuthHandler authHandler = new AuthHandler();
 	
 	public void onCreate(Bundle savedInstanceState)
     {
@@ -58,7 +60,8 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
         // Remove it later; This is for testing only
-        msgHelper.getMessages(getApplicationContext());
+        // msgHelper.getMessages(getApplicationContext());
+        authHandler.getAllAccounts(getApplicationContext());
     }
     
     @Override
