@@ -1,5 +1,6 @@
-package com.shankarlabs.sms;
+package com.shankarlabs.sms.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.view.Menu;
@@ -15,11 +16,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.shankarlabs.sms.R;
+import com.shankarlabs.sms.R.id;
+import com.shankarlabs.sms.R.layout;
+import com.shankarlabs.sms.R.menu;
 import com.shankarlabs.sms.core.AuthHandler;
 import com.shankarlabs.sms.core.MsgHelper;
-import com.shankarlabs.sms.ui.SettingsFragment;
-import com.shankarlabs.sms.ui.StatusFragment;
-import com.shankarlabs.sms.ui.MsgThreadFragment;
+import com.shankarlabs.sms.services.AuthHandlerService;
 
 public class SaveMySMSActivity extends SherlockFragmentActivity
 {
@@ -29,6 +32,12 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
 	
 	public void onCreate(Bundle savedInstanceState)
     {
+		/* Start the Service which will get the token and start back this Activity
+		Context context = getApplicationContext();
+		Intent newIntent = new Intent(context, AuthHandlerService.class);
+        context.startService(newIntent);
+        */
+        
 		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
@@ -61,7 +70,7 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
         
         // Remove it later; This is for testing only
         // msgHelper.getMessages(getApplicationContext());
-        authHandler.getAllAccounts(getApplicationContext());
+        // authHandler.getAllAccounts(getApplicationContext());
     }
     
     @Override
