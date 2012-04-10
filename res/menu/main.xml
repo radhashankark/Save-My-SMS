@@ -2,19 +2,17 @@
     
     <item android:id="@+id/menu_refresh"
         android:title="@string/menu_refresh"
-        android:icon="@drawable/ic_action_dark_refresh"
-        android:orderInCategory="2"
-        android:showAsAction="always" />
+        android:orderInCategory="1"
+        android:showAsAction="always|withText" />
     
     <item android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
-        android:icon="@drawable/ic_action_dark_settings"
-        android:orderInCategory="1"
-        android:showAsAction="always" />
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom|withText" />
 
     <item android:id="@+id/menu_share"
         android:title="@string/menu_share"
         android:icon="@drawable/ic_action_dark_share"
         android:orderInCategory="3"
-        android:showAsAction="never" />
+        android:showAsAction="ifRoom|withText" />
 </menu>

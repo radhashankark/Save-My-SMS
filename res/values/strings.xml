@@ -23,6 +23,24 @@
     <string name="restoreheadtxtview">Restore</string>
     <string name="restoresumtxtview">Restore everything</string>
     
+    <!-- Settings Screen Strings -->
+    <string name="smsgmailenabled">SMS will be backed up to GMail</string>
+    <string name="smsgmaildisabled">SMS will not be backed up to GMail</string>
+    <string name="smsdocsenabled">SMS will be backed up to Spreadsheets</string>
+    <string name="smsdocsdisabled">SMS will not be backed up to Spreadsheets</string>
+    
+    <string name="mmsgmailenabled">MMS will be backed up to GMail</string>
+    <string name="mmsgmaildisabled">MMS will not be backed up to GMail</string>
+    <string name="mmsdocsenabled">MMS will be backed up to Spreadsheets</string>
+    <string name="mmsdocsdisabled">MMS will not be backed up to Spreadsheets</string>
+    <string name="mmspicasaenabled">MMS attachments will be backed up to Picasa</string>
+    <string name="mmspicasadisabled">MMS attachments will not be backed up to Picasa</string>
+    
+    <string name="logsgmailenabled">Call Logs will be backed up to GMail</string>
+    <string name="logsgmaildisabled">Call Logs will not be backed up to GMail</string>
+    <string name="logsdocsenabled">Call Logs will be backed up to Spreadsheets</string>
+    <string name="logsdocsdisabled">Call Logs will not be backed up to Spreadsheets</string>
+    
     <!-- Misc Strings -->
     <string name="settings_done">Done</string>
     

@@ -92,15 +92,14 @@ public class AuthHandlerService extends Service
 			// String authdType = future.getResult().getString(AccountManager.KEY_ACCOUNT_TYPE);
 			String token = accMgrFuture.getResult().getString(AccountManager.KEY_AUTHTOKEN);
 			Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Result after blocking call : Name : " + authdName + ", Token : " + token);
-			
-			// com.shankarlabs.sms.SMSActivity
+			/*
 			Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Starting Activity SaveMySMSActivity");
 			Context context = getApplicationContext();
 			Intent smsActivityIntent = new Intent(context, SaveMySMSActivity.class);
 			smsActivityIntent.putExtra("com.shankarlabs.sms.authdName", authdName);
 			smsActivityIntent.putExtra("com.shankarlabs.sms.token", token);
 			context.startService(smsActivityIntent);
-			
+			*/
 			stopSelf(); // We're done here. Shut down the Service.
 		} 
 		catch (OperationCanceledException e) {

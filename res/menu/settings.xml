@@ -1,7 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
     <item android:id="@+id/settings_done"
-        android:icon="@drawable/ic_action_dark_done"
         android:title="@string/settings_done"
         android:orderInCategory="1"
         android:showAsAction="always" />

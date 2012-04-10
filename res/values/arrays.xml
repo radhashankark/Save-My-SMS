@@ -10,12 +10,12 @@
     </string-array>
     
     <string-array name="schincprefValues">
-        <item>1m</item>
-        <item>3m</item>
-        <item>5m</item>
-        <item>10m</item>
-        <item>20m</item>
-        <item>1h</item>
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>1</item>
     </string-array>
     
 	<string-array name="schtimeprefArray">
@@ -28,11 +28,11 @@
     </string-array>
     
     <string-array name="schtimeprefValues">
-        <item>1h</item>
-        <item>2h</item>
-        <item>4h</item>
-        <item>6h</item>
-        <item>12h</item>
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>12</item>
         <item>manual</item>
     </string-array>
     

@@ -8,18 +8,18 @@
         android:title="When to backup" >
         
         <ListPreference
+        	android:key="scheduleIncomingPref"
 			android:title="Incoming"
 			android:summary="Schedule backup on incoming SMS"
-			android:key="scheduleIncomingPref"
-			android:defaultValue="3m"
+			android:defaultValue="3"
 			android:entries="@array/schincprefArray"
 			android:entryValues="@array/schincprefValues" />
         
         <ListPreference
+        	android:key="scheduleTimedPref"
 			android:title="Timed"
 			android:summary="Schedue backup at specific intervals"
-			android:key="scheduleTimedPref"
-			android:defaultValue="2h"
+			android:defaultValue="2"
 			android:entries="@array/schtimeprefArray"
 			android:entryValues="@array/schtimeprefValues" />
         
@@ -30,34 +30,39 @@
         android:textSize="24dp" >
         	
             <CheckBoxPreference
-                android:id="@+id/smsgmailbkpckbx"
+                android:key="smsgmailbkpckbx"
                 android:title="Backup to GMail"
-                android:summary="Backup to GMail" />
+                android:summaryOn="@string/smsgmailenabled"
+                android:summaryOff="@string/smsgmaildisabled" />
             
             <CheckBoxPreference
-                android:id="@+id/smsdocsbkpckbx"
+                android:key="smsdocsbkpckbx"
                 android:title="Backup to Docs"
-                android:summary="Backup to Docs" />
+                android:summaryOn="@string/smsdocsenabled"
+                android:summaryOff="@string/smsdocsdisabled" />
                 
     </PreferenceCategory>
-    
+    <!-- These options are not being enabled right now.
     <PreferenceCategory
         android:title="Backup MMS" >
         	
             <CheckBoxPreference
-                android:id="@+id/mmsgmailbkpckbx"
+                android:key="mmsgmailbkpckbx"
                 android:title="Backup to GMail"
-                android:summary="Backup to GMail" />
+                android:summaryOn="@string/mmsgmailenabled"
+                android:summaryOff="@string/mmsgmaildisabled" />
             
             <CheckBoxPreference
-                android:id="@+id/mmsdocsbkpckbx"
+                android:key="mmsdocsbkpckbx"
                 android:title="Backup to Docs"
-                android:summary="Backup to Docs" />
+                android:summaryOn="@string/mmsdocsenabled"
+                android:summaryOff="@string/mmsdocsdisabled" />
                 
             <CheckBoxPreference
-                android:id="@+id/mmspicasabkpckbx"
+                android:key="mmspicasabkpckbx"
                 android:title="Backup to Picasa"
-                android:summary="Backup images to Picasa" />
+                android:summaryOn="@string/mmspicasaenabled"
+                android:summaryOff="@string/mmspicasadisabled" />
                 
     </PreferenceCategory>
     
@@ -65,15 +70,18 @@
         android:title="Backup Call Logs" >
         	
             <CheckBoxPreference
-                android:id="@+id/logsgmailbkpckbx"
+                android:key="logsgmailbkpckbx"
                 android:title="Backup to GMail"
-                android:summary="Backup to GMail" />
+                android:summaryOn="@string/logsgmailenabled"
+                android:summaryOff="@string/logsgmaildisabled" />
             
             <CheckBoxPreference
-                android:id="@+id/logsdocsbkpckbx"
+                android:key="logsdocsbkpckbx"
                 android:title="Backup to Docs"
-                android:summary="Backup to Docs" />
+                android:summaryOn="@string/logsdocsenabled"
+                android:summaryOff="@string/logsdocsdisabled" />
                 
     </PreferenceCategory>
-
+	-->
+	 
 </PreferenceScreen>

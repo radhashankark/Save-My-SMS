@@ -85,7 +85,7 @@ public class SaveMySMSActivity extends SherlockFragmentActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	Log.d(LOGTAG, "Clicked on itemID " + item.getItemId());
+    	// Log.d(LOGTAG, "Clicked on itemID " + item.getItemId());
         switch (item.getItemId()) {
             case android.R.id.home:
                 Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();

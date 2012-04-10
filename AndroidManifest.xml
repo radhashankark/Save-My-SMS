@@ -32,8 +32,8 @@
             android:configChanges="keyboardHidden|orientation" >
 
             <intent-filter >
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.shankarlabs.sms.MainActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         
         </activity>
@@ -44,8 +44,8 @@
             android:configChanges="keyboardHidden|orientation" >
 
             <intent-filter >
-                <action android:name="com.shankarlabs.sms.SMSActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         
         </activity>
