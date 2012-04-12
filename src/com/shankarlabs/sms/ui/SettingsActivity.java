@@ -19,10 +19,13 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.actionbarsherlock.ActionBarSherlock;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.shankarlabs.sms.R;
 import com.shankarlabs.sms.services.AuthHandlerService;
 
@@ -33,13 +36,24 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	private ListPreference scheduleIncomingPref, scheduleTimedPref;
 	private final int ACCOUNTS_DIALOG = 12; // Random int
 	private Account[] allAccounts;
+	private Account account;
+	private AccountManager accountManager;
 	private int selectedUserIndex = 0;
 	private String serviceName;
+	private boolean getTokenOnResume = false;
 	
 	@SuppressWarnings("deprecation") // The addPreferences and findPreference are deprecated.  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // For the Progress Spinner
+		
         super.onCreate(savedInstanceState);
+        
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true); // For Navigating Back
+        // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // For the Progress Spinner
+        setSupportProgressBarIndeterminateVisibility(false);
+        
         Log.d(LOGTAG, "SettingsActivity : onCreate : Loading prefs now");
         addPreferencesFromResource(R.xml.settings_prefs);
         
@@ -84,6 +98,9 @@ public class SettingsActivity extends SherlockPreferenceActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        	case android.R.id.home:
+        		// We're done here; Same as the back and done buttons
+        		finish();
             case R.id.settings_done:
                 // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
             	// Save if we need to save the Prefs
@@ -179,6 +196,7 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	}
 	
 	/**
+	 * requestToken(String id, String tokenType)
 	 * Requests the token for the email ID passed
 	 * @param	id	The email ID of the account we're requesting the token for
 	 * @param	tokenType	The Service we're requesting a token for
@@ -188,49 +206,72 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	private void requestToken(String id, String tokenType)
 	{
 		AccountManagerFuture<Bundle> accMgrFuture;
-		AccountManager accountManager = AccountManager.get(getApplicationContext());
+		accountManager = AccountManager.get(getApplicationContext());
 		String ACCOUNT_TYPE = "com.google";
 		String AUTH_TOKEN_TYPE = tokenType; // "oauth2:https://spreadsheets.google.com/feeds/"; // Spreadsheets
-		Account account = new Account(id, ACCOUNT_TYPE);
+		account = new Account(id, ACCOUNT_TYPE);
+		getTokenOnResume = true;
 		
-		accMgrFuture = accountManager.getAuthToken(account, AUTH_TOKEN_TYPE, false, new AccountManagerCallback<Bundle>()
+		accMgrFuture = accountManager.getAuthToken(account, AUTH_TOKEN_TYPE, false, new AccMgrCallback(), null);
+	}
+	
+	private class AccMgrCallback implements AccountManagerCallback<Bundle> {
+        public void run(AccountManagerFuture<Bundle> future) {
+                Bundle bundle;
+             // TODO Auto-generated method stub
+				try
 				{
-				@Override
-				public void run(AccountManagerFuture<Bundle> future) 
-				{
-					// TODO Auto-generated method stub
-					try
-					{
-						Bundle bundle = future.getResult();
-                        Intent intent = (Intent)bundle.get(AccountManager.KEY_INTENT);
-                        if(intent != null) {
-                                // User input required
-                                startActivity(intent);
-                        } else {
-                        	String authdName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
-    						// String authdType = future.getResult().getString(AccountManager.KEY_ACCOUNT_TYPE);
-    						String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-    						Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Result after blocking call : Name : " + authdName + ", Token : " + token);
-                        }
-                        
-												
-						/* com.shankarlabs.sms.SMSActivity
-						Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Starting Activity SaveMySMSActivity");
-						Context context = getApplicationContext();
-						Intent smsActivityIntent = new Intent(context, SaveMySMSActivity.class);
-						smsActivityIntent.putExtra("com.shankarlabs.sms.authdName", authdName);
-						smsActivityIntent.putExtra("com.shankarlabs.sms.token", token);
-						context.startService(smsActivityIntent);
-						*/
-					} 
-					catch (OperationCanceledException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} }, null);
+					bundle = future.getResult();
+                    Intent intent = (Intent)bundle.get(AccountManager.KEY_INTENT);
+                    if(intent != null && !getTokenOnResume) {
+                        // Callback gave us Intent. User needs to grant access
+                        startActivity(intent);
+                    } else {
+                    	String authdName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
+						// String authdType = future.getResult().getString(AccountManager.KEY_ACCOUNT_TYPE);
+						String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
+						Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Result after blocking call : Name : " + authdName + ", Token : " + token);
+						setSupportProgressBarIndeterminateVisibility(false);
+                    }
+                    
+											
+					/* com.shankarlabs.sms.SMSActivity
+					Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Starting Activity SaveMySMSActivity");
+					Context context = getApplicationContext();
+					Intent smsActivityIntent = new Intent(context, SaveMySMSActivity.class);
+					smsActivityIntent.putExtra("com.shankarlabs.sms.authdName", authdName);
+					smsActivityIntent.putExtra("com.shankarlabs.sms.token", token);
+					context.startService(smsActivityIntent);
+					*/
+				} 
+				catch (OperationCanceledException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        }
+	};
+
+	@Override
+    protected void onPause() {
+            super.onPause();
+            Log.d(LOGTAG, "SettingsActivity : onPause : Paused");
+    }
+	
+	@SuppressWarnings("deprecation")
+	@Override
+    protected void onResume() {
+            super.onResume();
+            if(getTokenOnResume) {
+	            Intent intent = getIntent();
+	            // AccountManager accountManager = AccountManager.get(getApplicationContext());
+	            // Account account = (Account)intent.getExtras().get("account");
+	            accountManager.getAuthToken(account, serviceName, false, new AccMgrCallback(), null);
+	            getTokenOnResume = false;
+	            setSupportProgressBarIndeterminateVisibility(false);
+            }
 	}
 	
     // Here go all the ChangeListener CL methods
@@ -260,7 +301,8 @@ public class SettingsActivity extends SherlockPreferenceActivity
     		boolean smsGmailEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(smsGmailEnabled) {
     			// Try and get the token. Start the AuthHandlerService
-    			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Spreadsheets
+    			serviceName = "oauth2:https://mail.google.com/"; //GMail
+    			setSupportProgressBarIndeterminateVisibility(true);
     			getAccountAndToken();
     		} else {
     		}
@@ -275,6 +317,7 @@ public class SettingsActivity extends SherlockPreferenceActivity
     		if(smsDocsEnabled) {
     			// Try and get the token. Start the AuthHandlerService
     			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Spreadsheets
+    			setSupportProgressBarIndeterminateVisibility(true);
     			getAccountAndToken();
     		} else {
     		}
