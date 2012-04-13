@@ -922,20 +922,22 @@ containing a value of this type.
         /**  Settings View Strings 
          */
         public static final int backupstatustxtview=0x7f0a0009;
-        public static final int logsdocsdisabled=0x7f0a002d;
-        public static final int logsdocsenabled=0x7f0a002c;
-        public static final int logsgmaildisabled=0x7f0a002b;
-        public static final int logsgmailenabled=0x7f0a002a;
+        public static final int logsbackupenabled=0x7f0a0022;
+        public static final int logsdocsdisabled=0x7f0a0030;
+        public static final int logsdocsenabled=0x7f0a002f;
+        public static final int logsgmaildisabled=0x7f0a002e;
+        public static final int logsgmailenabled=0x7f0a002d;
         public static final int menu_refresh=0x7f0a0005;
         public static final int menu_search=0x7f0a0006;
         public static final int menu_settings=0x7f0a0007;
         public static final int menu_share=0x7f0a0008;
-        public static final int mmsdocsdisabled=0x7f0a0027;
-        public static final int mmsdocsenabled=0x7f0a0026;
-        public static final int mmsgmaildisabled=0x7f0a0025;
-        public static final int mmsgmailenabled=0x7f0a0024;
-        public static final int mmspicasadisabled=0x7f0a0029;
-        public static final int mmspicasaenabled=0x7f0a0028;
+        public static final int mmsbackupenabled=0x7f0a0021;
+        public static final int mmsdocsdisabled=0x7f0a002a;
+        public static final int mmsdocsenabled=0x7f0a0029;
+        public static final int mmsgmaildisabled=0x7f0a0028;
+        public static final int mmsgmailenabled=0x7f0a0027;
+        public static final int mmspicasadisabled=0x7f0a002c;
+        public static final int mmspicasaenabled=0x7f0a002b;
         public static final int restoreheadtxtview=0x7f0a0012;
         public static final int restoresumtxtview=0x7f0a0013;
         public static final int schinc10m=0x7f0a0017;
@@ -954,13 +956,14 @@ containing a value of this type.
         public static final int schtimedmh=0x7f0a001f;
         /**  Misc Strings 
          */
-        public static final int settings_done=0x7f0a002e;
-        public static final int smsdocsdisabled=0x7f0a0023;
-        public static final int smsdocsenabled=0x7f0a0022;
-        public static final int smsgmaildisabled=0x7f0a0021;
+        public static final int settings_done=0x7f0a0031;
         /**  Settings Screen Checkbox Summary Strings 
          */
-        public static final int smsgmailenabled=0x7f0a0020;
+        public static final int smsbackupenabled=0x7f0a0020;
+        public static final int smsdocsdisabled=0x7f0a0026;
+        public static final int smsdocsenabled=0x7f0a0025;
+        public static final int smsgmaildisabled=0x7f0a0024;
+        public static final int smsgmailenabled=0x7f0a0023;
         public static final int stopbackupbtntext=0x7f0a000b;
         public static final int whatheadtxtview=0x7f0a000e;
         public static final int whatsumtxtview=0x7f0a000f;

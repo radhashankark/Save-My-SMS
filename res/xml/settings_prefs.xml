@@ -32,13 +32,11 @@
             <CheckBoxPreference
                 android:key="smsgmailbkpckbx"
                 android:title="Backup to GMail"
-                android:summaryOn="@string/smsgmailenabled"
                 android:summaryOff="@string/smsgmaildisabled" />
             
             <CheckBoxPreference
                 android:key="smsdocsbkpckbx"
                 android:title="Backup to Docs"
-                android:summaryOn="@string/smsdocsenabled"
                 android:summaryOff="@string/smsdocsdisabled" />
                 
     </PreferenceCategory>

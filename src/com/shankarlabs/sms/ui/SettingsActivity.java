@@ -40,12 +40,21 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	private Account[] allAccounts;
 	private Account account;
 	private AccountManager accountManager;
-	private int selectedUserIndex = 0;
+	private int selectedUserIndex = 0, selectedBackup = -1;
 	private String serviceName; // Name of the Google Service we'll request a token for
 	private boolean getTokenOnResume = false;
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor prefsEditor;
 	private Context mContext;
+	
+	// Names for the backups
+	private static final int SMS_GMAIL = 1;
+	private static final int SMS_DOCS = 2;
+	private static final int MMS_GMAIL = 3;
+	private static final int MMS_DOCS = 4;
+	private static final int MMS_PICASA = 5;
+	private static final int LOGS_GMAIL = 6;
+	private static final int LOGS_DOCS = 7;
 	
 	@SuppressWarnings("deprecation") // The addPreferences and findPreference are deprecated.  
 	@Override
@@ -64,7 +73,7 @@ public class SettingsActivity extends SherlockPreferenceActivity
         addPreferencesFromResource(R.xml.settings_prefs);
         
         initListeners();
-        initSettingsPreferences();
+        initPreferences();
     }
 	
 	/**
@@ -106,7 +115,7 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	 * <b>void</b> initSettingsPreferences() <br>
 	 * Go through all stored Preferences and initialize their values if required or missing
 	 */
-	private void initSettingsPreferences() {
+	private void initPreferences() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(mContext); // The default Prefs
 		prefsEditor = prefs.edit();
 		
@@ -150,12 +159,69 @@ public class SettingsActivity extends SherlockPreferenceActivity
 		}
 		
 		// Start checking all the Prefs
-		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : scheduleIncomingPref : " + schIncPref);
-		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : scheduleTimedPref : " + schTimedPref);
-		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : smsgmailbkpckbx : " + prefs.getBoolean("smsgmailbkpckbx", false));
-		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : smsdocsbkpckbx : " + prefs.getBoolean("smsdocsbkpckbx", false));
+		// Log.d(LOGTAG, "SettingsActivity : initPreferences : scheduleIncomingPref : " + schIncPref);
+		// Log.d(LOGTAG, "SettingsActivity : initPreferences : scheduleTimedPref : " + schTimedPref);
+		Log.d(LOGTAG, "SettingsActivity : initPreferences : smsgmailid : " + prefs.getString("smsgmailid", null));
+		Log.d(LOGTAG, "SettingsActivity : initPreferences : smsdocsid : " + prefs.getString("smsdocsid", null));
 		
-		
+		// Set the email IDs used for backups 
+        if(prefs.getString("smsgmailid", null) == null){ 
+        	prefsEditor.putString("smsgmailid", "");
+        } else if(prefs.getString("smsgmailid", null).length() < 2){ 
+        	smsGmailPref.setChecked(false);
+        	smsGmailPref.setSummary(R.string.smsgmaildisabled);
+        } else { 
+        	smsGmailPref.setSummary(getText(R.string.smsbackupenabled) + prefs.getString("smsgmailid", null));
+        }
+        if(prefs.getString("smsdocsid", null) == null){ 
+        	prefsEditor.putString("smsdocsid", "");
+        } else if(prefs.getString("smsdocsid", null).length() < 2){ 
+        	smsDocsPref.setChecked(false);
+        	smsDocsPref.setSummary(R.string.smsdocsdisabled);
+        } else { 
+        	smsDocsPref.setSummary(getText(R.string.smsbackupenabled) + prefs.getString("smsdocsid", null));
+        }
+        if(prefs.getString("mmsgmailid", null) == null){ 
+        	prefsEditor.putString("mmsgmailid", "");
+        } else if(prefs.getString("mmsgmailid", null).length() < 2){ 
+        	// mmsGmailPref.setChecked(false);
+        	// mmsGmailPref.setSummary(R.string.mmsgmaildisabled);
+        } else { 
+        	// mmsGmailPref.setSummary(R.string.mmsbackupenabled + prefs.getString("mmsgmailid", null));
+        }
+        if(prefs.getString("mmsdocsid", null) == null){ 
+        	prefsEditor.putString("mmsdocsid", "");
+        } else if(prefs.getString("mmsdocsid", null).length() < 2){ 
+        	// mmsDocsPref.setChecked(false);
+        	// mmsDocsPref.setSummary(R.string.mmsdocsdisabled);
+        } else { 
+        	// mmsDocsPref.setSummary(getText(R.string.mmsbackupenabled) + prefs.getString("mmsdocsid", null));
+        }
+        if(prefs.getString("mmspicasaid", null) == null){ 
+        	prefsEditor.putString("mmspicasaid", "");
+        } else if(prefs.getString("mmspicasaid", null).length() < 2){ 
+        	// mmsPicasaPref.setChecked(false);
+        	// mmsPicasaPref.setSummary(R.string.mmspicasadisabled);
+        } else { 
+        	// mmsPicasaPref.setSummary(getText(R.string.mmsbackupenabled) + prefs.getString("mmspicasaid", null));
+        }
+        if(prefs.getString("logsgmailid", null) == null){ 
+        	prefsEditor.putString("logsgmailid", "");
+        } else if(prefs.getString("logsgmailid", null).length() < 2){ 
+        	// logsGmailPref.setChecked(false);
+        	// logsGmailPref.setSummary(R.string.logsgmaildisabled);
+        } else { 
+        	// logsGmailPref.setSummary(getText(R.string.logsbackupenabled) + prefs.getString("logsgmailid", null));
+        }
+        if(prefs.getString("logsdocsid", null) == null){ 
+        	prefsEditor.putString("logsdocsid", "");
+        } else if(prefs.getString("logsdocsid", null).length() < 2){ 
+        	// logsDocsPref.setChecked(false);
+        	// logsDocsPref.setSummary(R.string.logsdocsdisabled);
+        } else { 
+        	// logsDocsPref.setSummary(getText(R.string.logsbackupenabled) + prefs.getString("logsdocsid", null));
+        }
+        prefsEditor.commit();
 	}
 	
 	@Override
@@ -290,7 +356,6 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	private class AccMgrCallback implements AccountManagerCallback<Bundle> {
         public void run(AccountManagerFuture<Bundle> future) {
                 Bundle bundle;
-             // TODO Auto-generated method stub
 				try
 				{
 					bundle = future.getResult();
@@ -302,8 +367,89 @@ public class SettingsActivity extends SherlockPreferenceActivity
                     	String authdName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
 						// String authdType = future.getResult().getString(AccountManager.KEY_ACCOUNT_TYPE);
 						String token = bundle.getString(AccountManager.KEY_AUTHTOKEN);
-						Log.d(LOGTAG, "AuthHandlerService : getAuthToken : Result after blocking call : Name : " + authdName + ", Token : " + token);
+						Log.d(LOGTAG, "SettingsActivity : AccMgrCallback : Result after blocking call : Name : " + authdName + ", Token : " + token);
 						setSupportProgressBarIndeterminateVisibility(false);
+						
+						// Save the account details to Prefs for future use
+						// TODO Save the account details in Prefs
+						if(authdName != null) {
+							switch(selectedBackup) {
+								case SMS_GMAIL: 
+									prefsEditor.putString("smsgmailid", authdName);
+									smsGmailPref.setSummary(getText(R.string.smsbackupenabled) + authdName);
+									break;
+								case SMS_DOCS: 
+									prefsEditor.putString("smsdocsid", authdName);
+									smsDocsPref.setSummary(getText(R.string.smsbackupenabled) + authdName);
+									break;
+								/* These are not used right now
+								case MMS_GMAIL: 
+									prefsEditor.putString("mmsgmailid", authdName);
+									mmsGmailPref.setSummary(getText(R.string.mmsbackupenabled) + authdName);
+									break;
+								case MMS_DOCS: 
+									prefsEditor.putString("mmsdocsid", authdName);
+									mmsDocsPref.setSummary(getText(R.string.mmsbackupenabled) + authdName);
+									break;
+								case MMS_PICASA: 
+									prefsEditor.putString("mmspicasaid", authdName);
+									mmsPicasaPref.setSummary(getText(R.string.mmsbackupenabled) + authdName);
+									break;
+								case LOGS_GMAIL: 
+									prefsEditor.putString("logsgmailid", authdName);
+									logsGmailPref.setSummary(getText(R.string.logsbackupenabled) + authdName);
+									break;
+								case LOGS_DOCS: 
+									prefsEditor.putString("logsdocsid", authdName);
+									logsDocsPref.setSummary(getText(R.string.logsbackupenabled) + authdName);
+									break;
+								*/
+							}
+							prefsEditor.commit();
+						} else {
+							// If the username returned is null, clean out that ID. Means the user has not granted access.
+							authdName = ""; // We don't want to store null values in Prefs. Use an empty String
+							switch(selectedBackup) {
+								case SMS_GMAIL: 
+									prefsEditor.putString("smsgmailid", authdName);
+									smsGmailPref.setChecked(false);
+									smsGmailPref.setSummary(R.string.smsgmaildisabled);
+									break;
+								case SMS_DOCS: 
+									prefsEditor.putString("smsdocsid", authdName);
+									smsDocsPref.setChecked(false);
+									smsDocsPref.setSummary(R.string.smsdocsdisabled);
+									break;
+								/* These are not used right now.
+								case MMS_GMAIL: 
+									prefsEditor.putString("mmsgmailid", authdName);
+									mmsGmailPref.setChecked(false);
+									mmsGmailPref.setSummary(R.string.mmsgmaildisabled);
+									break;
+								case MMS_DOCS: 
+									prefsEditor.putString("mmsdocsid", authdName);
+									mmsDocsPref.setChecked(false);
+									mmsDocsPref.setSummary(R.string.mmsdocsdisabled);
+									break;
+								case MMS_PICASA: 
+									prefsEditor.putString("mmspicasaid", authdName);
+									mmsPicasaPref.setChecked(false);
+									mmsPicasaPref.setSummary(R.string.mmspicasadisabled);
+									break;
+								case LOGS_GMAIL: 
+									prefsEditor.putString("logsgmailid", authdName);
+									logsGmailPref.setChecked(false);
+									logsGmailPref.setSummary(R.string.logsgmaildisabled);
+									break;
+								case LOGS_DOCS: 
+									prefsEditor.putString("logsdocsid", authdName);
+									logsDocsPref.setChecked(false);
+									logsDocsPref.setSummary(R.string.logsdocsdisabled);
+									break;
+								*/
+							}
+							prefsEditor.commit();
+						}
                     }
                     
 											
@@ -405,8 +551,12 @@ public class SettingsActivity extends SherlockPreferenceActivity
     			// Try and get the token. Start the AuthHandlerService
     			serviceName = "oauth2:https://mail.google.com/"; //GMail
     			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = SMS_GMAIL;
     			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("smsgmailid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -420,8 +570,12 @@ public class SettingsActivity extends SherlockPreferenceActivity
     			// Try and get the token. Start the AuthHandlerService
     			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Spreadsheets
     			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = SMS_DOCS;
     			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("smsdocsid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -433,7 +587,14 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		boolean mmsGmailEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(mmsGmailEnabled) {
+    			serviceName = "oauth2:https://mail.google.com/"; //GMail
+    			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = MMS_GMAIL;
+    			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("mmsgmailid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -444,7 +605,15 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		boolean mmsDocsEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(mmsDocsEnabled) {
+    			// Try and get the token. Start the AuthHandlerService
+    			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Spreadsheets
+    			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = MMS_DOCS;
+    			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("mmsdocsid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -455,7 +624,15 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		boolean mmsPicasaEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(mmsPicasaEnabled) {
+    			// Try and get the token. Start the AuthHandlerService
+    			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Change to Picasa
+    			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = MMS_PICASA;
+    			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("mmspicasaid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -466,7 +643,14 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		boolean logsGmailEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(logsGmailEnabled) {
+    			serviceName = "oauth2:https://mail.google.com/"; //GMail
+    			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = LOGS_GMAIL;
+    			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("logsgmailid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}
@@ -477,7 +661,15 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		boolean logsDocsEnabled = Boolean.valueOf(String.valueOf(newValue));
     		if(logsDocsEnabled) {
+    			// Try and get the token. Start the AuthHandlerService
+    			serviceName = "oauth2:https://spreadsheets.google.com/feeds/"; //Spreadsheets
+    			setSupportProgressBarIndeterminateVisibility(true);
+    			selectedBackup = LOGS_DOCS;
+    			getAccountAndToken();
     		} else {
+    			// Backup disabled; Clear out the value
+    			prefsEditor.putString("logsdocsid", "");
+    			prefsEditor.commit();
     		}
 			return true; // No one else needs to handle this
     	}

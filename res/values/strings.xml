@@ -39,6 +39,10 @@
     <string name="schtimedmh">Backup messages manually</string>
     
     <!-- Settings Screen Checkbox Summary Strings -->
+    <string name="smsbackupenabled">SMS will be backed up to </string>
+    <string name="mmsbackupenabled">MMS will be backed up to </string>
+    <string name="logsbackupenabled">Logs will be backed up to </string>
+    
     <string name="smsgmailenabled">SMS will be backed up to GMail</string>
     <string name="smsgmaildisabled">SMS will not be backed up to GMail</string>
     <string name="smsdocsenabled">SMS will be backed up to Spreadsheets</string>
