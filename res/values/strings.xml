@@ -23,7 +23,22 @@
     <string name="restoreheadtxtview">Restore</string>
     <string name="restoresumtxtview">Restore everything</string>
     
-    <!-- Settings Screen Strings -->
+    <!-- Settings Screen Schedule Summary Strings -->
+    <string name="schinc1m">Backup message one minute after it arrives</string>
+    <string name="schinc3m">Backup message 3 minutes after it arrives</string>
+    <string name="schinc5m">Backup message 5 minutes after it arrives</string>
+    <string name="schinc10m">Backup message 10 minutes after it arrives</string>
+    <string name="schinc20m">Backup message 20 minutes after it arrives</string>
+    <string name="schinc60m">Backup message one hour after it arrives</string>
+    
+    <string name="schtimed1h">Backup messages every hour</string>
+    <string name="schtimed2h">Backup messages every 2 hours</string>
+    <string name="schtimed4h">Backup messages every 4 hours</string>
+    <string name="schtimed6h">Backup messages every 6 hours</string>
+    <string name="schtimed12h">Backup messages every 12 hours</string>
+    <string name="schtimedmh">Backup messages manually</string>
+    
+    <!-- Settings Screen Checkbox Summary Strings -->
     <string name="smsgmailenabled">SMS will be backed up to GMail</string>
     <string name="smsgmaildisabled">SMS will not be backed up to GMail</string>
     <string name="smsdocsenabled">SMS will be backed up to Spreadsheets</string>

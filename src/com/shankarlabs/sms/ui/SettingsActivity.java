@@ -10,11 +10,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,13 +41,17 @@ public class SettingsActivity extends SherlockPreferenceActivity
 	private Account account;
 	private AccountManager accountManager;
 	private int selectedUserIndex = 0;
-	private String serviceName;
+	private String serviceName; // Name of the Google Service we'll request a token for
 	private boolean getTokenOnResume = false;
+	private SharedPreferences prefs;
+	private SharedPreferences.Editor prefsEditor;
+	private Context mContext;
 	
 	@SuppressWarnings("deprecation") // The addPreferences and findPreference are deprecated.  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // For the Progress Spinner
+		mContext = getApplicationContext();
 		
         super.onCreate(savedInstanceState);
         
@@ -54,10 +60,21 @@ public class SettingsActivity extends SherlockPreferenceActivity
         // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // For the Progress Spinner
         setSupportProgressBarIndeterminateVisibility(false);
         
-        Log.d(LOGTAG, "SettingsActivity : onCreate : Loading prefs now");
+        Log.d(LOGTAG, "SettingsActivity : onCreate : Loading prefs and initializing Listeners");
         addPreferencesFromResource(R.xml.settings_prefs);
         
-        // Get the Preference Items
+        initListeners();
+        initSettingsPreferences();
+    }
+	
+	/**
+	 * void initListeners()
+	 * Gets all elements on the Preference and initialize their Listeners
+	 * Run as soon as the PreferenceActivity is loaded
+	 */
+	@SuppressWarnings("deprecation")
+	private void initListeners() {
+		// Get the Preference Items
         scheduleIncomingPref = (ListPreference) findPreference("scheduleIncomingPref");
         scheduleTimedPref = (ListPreference) findPreference("scheduleTimedPref");
         smsGmailPref = (CheckBoxPreference) findPreference("smsgmailbkpckbx");
@@ -82,8 +99,64 @@ public class SettingsActivity extends SherlockPreferenceActivity
         logsDocsPref.setOnPreferenceChangeListener(logsDocsCL);
         */
         
-        Log.d(LOGTAG, "SettingsActivity : onCreate : Initialized all Listeners");
-    }
+        Log.d(LOGTAG, "SettingsActivity : initListeners : Initialized all Listeners");
+	}
+	
+	/**
+	 * <b>void</b> initSettingsPreferences() <br>
+	 * Go through all stored Preferences and initialize their values if required or missing
+	 */
+	private void initSettingsPreferences() {
+		prefs = PreferenceManager.getDefaultSharedPreferences(mContext); // The default Prefs
+		prefsEditor = prefs.edit();
+		
+		// Set the summaries for Backup Schedules
+		// This is a good place since we're still initializing and we're reading Prefs
+		String schIncPref = prefs.getString("scheduleIncomingPref", null);
+		String schTimedPref = prefs.getString("scheduleTimedPref", null);
+		
+		if(schIncPref != null) {
+			switch(Integer.parseInt(schIncPref)) {
+				case 1: scheduleIncomingPref.setSummary(R.string.schinc1m);
+					break;
+				case 3: scheduleIncomingPref.setSummary(R.string.schinc3m);
+					break;
+				case 5: scheduleIncomingPref.setSummary(R.string.schinc5m);
+					break;
+				case 10: scheduleIncomingPref.setSummary(R.string.schinc10m);
+					break;
+				case 20: scheduleIncomingPref.setSummary(R.string.schinc20m);
+					break;
+				case 60: scheduleIncomingPref.setSummary(R.string.schinc60m);
+					break;
+			}
+		}
+		
+		if(schTimedPref != null) {
+			switch(Integer.parseInt(schTimedPref)) {
+				case 1: scheduleTimedPref.setSummary(R.string.schtimed1h);
+					break;
+				case 2: scheduleTimedPref.setSummary(R.string.schtimed2h);
+					break;
+				case 4: scheduleTimedPref.setSummary(R.string.schtimed4h);
+					break;
+				case 6: scheduleTimedPref.setSummary(R.string.schtimed6h);
+					break;
+				case 12: scheduleTimedPref.setSummary(R.string.schtimed12h);
+					break;
+				case -1: scheduleTimedPref.setSummary(R.string.schtimedmh);
+					break;
+			}
+		}
+		
+		// Start checking all the Prefs
+		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : scheduleIncomingPref : " + schIncPref);
+		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : scheduleTimedPref : " + schTimedPref);
+		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : smsgmailbkpckbx : " + prefs.getBoolean("smsgmailbkpckbx", false));
+		Log.d(LOGTAG, "SettingsActivity : initSettingsPreferences : smsdocsbkpckbx : " + prefs.getBoolean("smsdocsbkpckbx", false));
+		
+		
+	}
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,15 +234,14 @@ public class SettingsActivity extends SherlockPreferenceActivity
 		  {
 			  case ACCOUNTS_DIALOG: // The Dialog for Accounts
 				  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				  builder.setTitle("Select an account");
+				  builder.setTitle("Backup data to which account?");
 				  final int size = allAccounts.length;
 				  String[] names = new String[size];
 				  for (int i = 0; i < size; i++)
 				  {
 					  names[i] = allAccounts[i].name;
-					  Log.d(LOGTAG, "SettingsActivity : onCreateDialog : Account Found : " + names[i]);
+					  // Log.d(LOGTAG, "SettingsActivity : onCreateDialog : Account Found : " + names[i]);
 				  }
-				  
 				  builder.setItems(names, new DialogInterface.OnClickListener()
 				  {
 				    public void onClick(DialogInterface dialog, int which) 
@@ -280,8 +352,23 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		String scheduleIncDelay = String.valueOf(newValue);
     		// Log.d(LOGTAG, "SettingsActivity : onPrefChange : SMS backed up " + scheduleIncDelay + " minutes after they arrive");
-    		scheduleIncomingPref.setSummary("SMS backed up " + scheduleIncDelay + " minutes after they arrive");
-			return true; // No one else needs to handle this
+    		if(scheduleIncDelay != null) {
+    			switch(Integer.parseInt(scheduleIncDelay)) {
+    				case 1: scheduleIncomingPref.setSummary(R.string.schinc1m);
+    					break;
+    				case 3: scheduleIncomingPref.setSummary(R.string.schinc3m);
+    					break;
+    				case 5: scheduleIncomingPref.setSummary(R.string.schinc5m);
+    					break;
+    				case 10: scheduleIncomingPref.setSummary(R.string.schinc10m);
+    					break;
+    				case 20: scheduleIncomingPref.setSummary(R.string.schinc20m);
+    					break;
+    				case 60: scheduleIncomingPref.setSummary(R.string.schinc60m);
+    					break;
+    			}
+    		}	
+    		return true; // No one else needs to handle this
     	}
     };
     
@@ -290,8 +377,23 @@ public class SettingsActivity extends SherlockPreferenceActivity
     	public boolean onPreferenceChange(Preference preference, Object newValue) {
     		String scheduleTimes = String.valueOf(newValue);
     		// Log.d(LOGTAG, "SettingsActivity : onPrefChange : SMS backed up every " + scheduleTimes + " hours");
-    		scheduleTimedPref.setSummary("SMS backed up every " + scheduleTimes + " hours");
-			return true; // No one else needs to handle this
+    		if(scheduleTimes != null) {
+    			switch(Integer.parseInt(scheduleTimes)) {
+    				case 1: scheduleTimedPref.setSummary(R.string.schtimed1h);
+    					break;
+    				case 2: scheduleTimedPref.setSummary(R.string.schtimed2h);
+    					break;
+    				case 4: scheduleTimedPref.setSummary(R.string.schtimed4h);
+    					break;
+    				case 6: scheduleTimedPref.setSummary(R.string.schtimed6h);
+    					break;
+    				case 12: scheduleTimedPref.setSummary(R.string.schtimed12h);
+    					break;
+    				case -1: scheduleTimedPref.setSummary(R.string.schtimedmh);
+    					break;
+    			}
+    		}
+    		return true; // No one else needs to handle this
     	}
     };
     

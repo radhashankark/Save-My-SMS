@@ -844,27 +844,28 @@ containing a value of this type.
         public static final int actionbar_compat_item_refresh=0x7f050013;
         public static final int actionbar_compat_item_refresh_progress=0x7f050012;
         public static final int actionbar_compat_title=0x7f050011;
-        public static final int backupnowbtn=0x7f05002c;
-        public static final int backupprogress=0x7f050029;
+        public static final int backupnowbtn=0x7f05002d;
+        public static final int backupprogress=0x7f05002a;
+        public static final int backupstatus=0x7f050029;
         public static final int disableHome=0x7f050009;
         public static final int fragment_content=0x7f050027;
         public static final int homeAsUp=0x7f050006;
         public static final int listMode=0x7f050002;
         public static final int menu_refresh=0x7f050014;
-        public static final int menu_settings=0x7f05002f;
-        public static final int menu_share=0x7f050030;
+        public static final int menu_settings=0x7f050030;
+        public static final int menu_share=0x7f050031;
         public static final int normal=0x7f050001;
-        public static final int settings_done=0x7f050031;
+        public static final int settings_done=0x7f050032;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
         public static final int status_fragment=0x7f050028;
-        public static final int statuscount=0x7f05002b;
-        public static final int statustext=0x7f05002a;
-        public static final int stopbackupbtn=0x7f05002d;
+        public static final int statuscount=0x7f05002c;
+        public static final int statustext=0x7f05002b;
+        public static final int stopbackupbtn=0x7f05002e;
         public static final int tabMode=0x7f050003;
         public static final int useLogo=0x7f050004;
-        public static final int viewsms_fragment=0x7f05002e;
+        public static final int viewsms_fragment=0x7f05002f;
         public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
@@ -921,31 +922,45 @@ containing a value of this type.
         /**  Settings View Strings 
          */
         public static final int backupstatustxtview=0x7f0a0009;
-        public static final int logsdocsdisabled=0x7f0a0021;
-        public static final int logsdocsenabled=0x7f0a0020;
-        public static final int logsgmaildisabled=0x7f0a001f;
-        public static final int logsgmailenabled=0x7f0a001e;
+        public static final int logsdocsdisabled=0x7f0a002d;
+        public static final int logsdocsenabled=0x7f0a002c;
+        public static final int logsgmaildisabled=0x7f0a002b;
+        public static final int logsgmailenabled=0x7f0a002a;
         public static final int menu_refresh=0x7f0a0005;
         public static final int menu_search=0x7f0a0006;
         public static final int menu_settings=0x7f0a0007;
         public static final int menu_share=0x7f0a0008;
-        public static final int mmsdocsdisabled=0x7f0a001b;
-        public static final int mmsdocsenabled=0x7f0a001a;
-        public static final int mmsgmaildisabled=0x7f0a0019;
-        public static final int mmsgmailenabled=0x7f0a0018;
-        public static final int mmspicasadisabled=0x7f0a001d;
-        public static final int mmspicasaenabled=0x7f0a001c;
+        public static final int mmsdocsdisabled=0x7f0a0027;
+        public static final int mmsdocsenabled=0x7f0a0026;
+        public static final int mmsgmaildisabled=0x7f0a0025;
+        public static final int mmsgmailenabled=0x7f0a0024;
+        public static final int mmspicasadisabled=0x7f0a0029;
+        public static final int mmspicasaenabled=0x7f0a0028;
         public static final int restoreheadtxtview=0x7f0a0012;
         public static final int restoresumtxtview=0x7f0a0013;
+        public static final int schinc10m=0x7f0a0017;
+        /**  Settings Screen Schedule Summary Strings 
+         */
+        public static final int schinc1m=0x7f0a0014;
+        public static final int schinc20m=0x7f0a0018;
+        public static final int schinc3m=0x7f0a0015;
+        public static final int schinc5m=0x7f0a0016;
+        public static final int schinc60m=0x7f0a0019;
+        public static final int schtimed12h=0x7f0a001e;
+        public static final int schtimed1h=0x7f0a001a;
+        public static final int schtimed2h=0x7f0a001b;
+        public static final int schtimed4h=0x7f0a001c;
+        public static final int schtimed6h=0x7f0a001d;
+        public static final int schtimedmh=0x7f0a001f;
         /**  Misc Strings 
          */
-        public static final int settings_done=0x7f0a0022;
-        public static final int smsdocsdisabled=0x7f0a0017;
-        public static final int smsdocsenabled=0x7f0a0016;
-        public static final int smsgmaildisabled=0x7f0a0015;
-        /**  Settings Screen Strings 
+        public static final int settings_done=0x7f0a002e;
+        public static final int smsdocsdisabled=0x7f0a0023;
+        public static final int smsdocsenabled=0x7f0a0022;
+        public static final int smsgmaildisabled=0x7f0a0021;
+        /**  Settings Screen Checkbox Summary Strings 
          */
-        public static final int smsgmailenabled=0x7f0a0014;
+        public static final int smsgmailenabled=0x7f0a0020;
         public static final int stopbackupbtntext=0x7f0a000b;
         public static final int whatheadtxtview=0x7f0a000e;
         public static final int whatsumtxtview=0x7f0a000f;
